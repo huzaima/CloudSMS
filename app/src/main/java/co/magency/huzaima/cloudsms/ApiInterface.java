@@ -1,5 +1,7 @@
 package co.magency.huzaima.cloudsms;
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,4 +20,12 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("/sms")
     Call<Sms> sendSMS(@Body Sms sms);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("/chat")
+    Call<JSONObject> sendChatList(@Body JSONObject jsonObject);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("/registerSocket")
+    Call<JSONObject> registerSocket(@Body JSONObject jsonObject);
 }
