@@ -2,9 +2,10 @@ package co.magency.huzaima.cloudsms;
 
 import org.json.JSONObject;
 
+import co.magency.huzaima.cloudsms.model.LoginModel;
+import co.magency.huzaima.cloudsms.model.Sms;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -13,9 +14,6 @@ import retrofit2.http.POST;
  */
 
 public interface ApiInterface {
-
-    @GET("/ping")
-    Call<Ping> ping();
 
     @Headers({"Content-Type: application/json"})
     @POST("/sms")
@@ -28,4 +26,12 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("/registerSocket")
     Call<JSONObject> registerSocket(@Body JSONObject jsonObject);
+
+    /*--------------------------------------------------------------------------------------------*/
+    /* New endpoints                                                                              */
+    /*--------------------------------------------------------------------------------------------*/
+
+    @Headers({"Content-Type: application/json"})
+    @POST("/lll")
+    Call<Void> login(@Body LoginModel loginModel);
 }

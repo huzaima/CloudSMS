@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import co.magency.huzaima.cloudsms.model.Sms;
+
 public class IncomingSMSReceiver extends BroadcastReceiver {
     public IncomingSMSReceiver() {
     }

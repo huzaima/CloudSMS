@@ -30,13 +30,16 @@ dependencies {
     // Support libraries
     compile 'com.android.support:appcompat-v7:25.1.1'
 
+    // QR code scanner
+    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
+
     // Networking libraries - Retrofit
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
     // Firebase
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
     compile 'com.google.firebase:firebase-auth:10.2.0'
 
     compile('io.socket:socket.io-client:0.8.3') {

@@ -1,4 +1,4 @@
-package co.magency.huzaima.cloudsms;
+package co.magency.huzaima.cloudsms.model;
 
 /**
  * Created by huzaima on 2/16/17.

@@ -22,14 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="4dp"
-        android:text="Connect" />
-
-    <Button
-        android:id="@+id/send_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="4dp"
-        android:text="Send conversation list" />
+        android:text="Press me only after writing correct IP" />
 
 </LinearLayout>
