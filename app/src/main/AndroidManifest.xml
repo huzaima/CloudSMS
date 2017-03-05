@@ -26,7 +26,7 @@
         </receiver>
 
         <service
-            android:name=".IncomingMessagingService"
+            android:name=".fcm.IncomingMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -34,7 +34,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".DeviceTokenService"
+            android:name=".fcm.DeviceTokenService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -49,9 +49,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".auth.QrCodeScannerActivity" />
-        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".main.MainActivity" />
+
+        <service
+            android:name=".ConversationListService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

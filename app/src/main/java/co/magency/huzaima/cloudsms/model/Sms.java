@@ -8,7 +8,7 @@ public class Sms {
 
     private String number;
     private String messsage;
-    private String date;
+    private long date;
 
     public Sms() {
     }
@@ -18,7 +18,7 @@ public class Sms {
         this.messsage = messsage;
     }
 
-    public Sms(String number, String messsage, String date) {
+    public Sms(String number, String messsage, long date) {
         this.number = number;
         this.messsage = messsage;
         this.date = date;
@@ -40,11 +40,11 @@ public class Sms {
         this.messsage = messsage;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

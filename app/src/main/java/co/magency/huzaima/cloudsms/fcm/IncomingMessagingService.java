@@ -1,4 +1,4 @@
-package co.magency.huzaima.cloudsms;
+package co.magency.huzaima.cloudsms.fcm;
 
 import android.util.Log;
 

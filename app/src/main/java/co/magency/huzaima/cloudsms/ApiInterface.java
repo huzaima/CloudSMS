@@ -2,6 +2,7 @@ package co.magency.huzaima.cloudsms;
 
 import org.json.JSONObject;
 
+import co.magency.huzaima.cloudsms.model.ConversationListModel;
 import co.magency.huzaima.cloudsms.model.LoginModel;
 import co.magency.huzaima.cloudsms.model.Sms;
 import retrofit2.Call;
@@ -20,10 +21,6 @@ public interface ApiInterface {
     Call<Sms> sendSMS(@Body Sms sms);
 
     @Headers({"Content-Type: application/json"})
-    @POST("/chat")
-    Call<JSONObject> sendChatList(@Body JSONObject jsonObject);
-
-    @Headers({"Content-Type: application/json"})
     @POST("/registerSocket")
     Call<JSONObject> registerSocket(@Body JSONObject jsonObject);
 
@@ -34,4 +31,8 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json"})
     @POST("/lll")
     Call<Void> login(@Body LoginModel loginModel);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("/chat")
+    Call<Void> sendChatList(@Body ConversationListModel conversationListModel);
 }
