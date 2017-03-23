@@ -1,55 +1,55 @@
 package co.magency.huzaima.cloudsms.model;
 
+import android.support.annotation.NonNull;
+
 /**
- * Created by huzaima on 2/16/17.
+ * Created by huzaima on 3/19/17.
  */
 
-public class Sms {
+public class Sms implements Comparable<Sms> {
 
-    private String number;
-    private String messsage;
-    private long date;
+    private String message;
+    private long timestamp;
+    private boolean sent;
 
-    public Sms() {
+    public Sms(String message, long timestamp, boolean sent) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.sent = sent;
     }
 
-    public Sms(String number, String messsage) {
-        this.number = number;
-        this.messsage = messsage;
+    public String getMessage() {
+        return message;
     }
 
-    public Sms(String number, String messsage, long date) {
-        this.number = number;
-        this.messsage = messsage;
-        this.date = date;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getNumber() {
-        return number;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getMesssage() {
-        return messsage;
+    public boolean isSent() {
+        return sent;
     }
 
-    public void setMesssage(String messsage) {
-        this.messsage = messsage;
-    }
-
-    public long getDate() {
-        return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 
     @Override
-    public String toString() {
-        return date + ": " + number + ": " + messsage + "\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n\n";
+    public int compareTo(@NonNull Sms o) {
+
+        if (this.timestamp < o.getTimestamp())
+            return 1;
+        else if (this.timestamp > o.getTimestamp())
+            return -1;
+        else
+            return 0;
     }
 }
