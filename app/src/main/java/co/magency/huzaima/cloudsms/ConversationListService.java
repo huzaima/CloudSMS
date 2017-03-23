@@ -136,14 +136,8 @@ public class ConversationListService extends IntentService {
         Gson gson = new Gson();
         conversationList.setAuthToken(authToken);
         final String json = gson.toJson(conversationList, type);
-        SocketHandler.socket.emit(AppConstants.FIRST_CONNECT_SYNC, json);
+        if (SocketHandler.socket != null)
+            SocketHandler.socket.emit(AppConstants.FIRST_CONNECT_SYNC, json);
         Log.v("lalala", json);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                socket.emit(AppConstants.FIRST_CONNECT_SYNC, json);
-//                stopSelf();
-//            }
-//        }).start();
     }
 }

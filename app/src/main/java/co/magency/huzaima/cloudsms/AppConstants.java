@@ -18,7 +18,7 @@ public final class AppConstants {
     // Socket emit events
     public static final String AUTH_TOKEN_EMIT = "androidAuth";
     public static final String FIRST_CONNECT_SYNC = "pushAllMsgData";
-    public static final String INCOMING_SMS = "socket.emit.incoming_sms";
+    public static final String NEW_MSG_RECEIVED = "newMsgRecv";
     public static final String MESSAGE_TO_SEND = "socket.on.message_to_send";
 
     // Notification id
