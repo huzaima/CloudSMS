@@ -14,13 +14,20 @@ public final class AppConstants {
 
     // Intent extra's keys
     public static final String AUTH_TOKEN = "intent.key.auth_token";
+    public static final String GET_CHAT_FOR_NUMBER = "intent.key.chat_for_number";
 
-    // Socket emit events
+    // Socket events
     public static final String AUTH_TOKEN_EMIT = "androidAuth";
-    public static final String FIRST_CONNECT_SYNC = "pushAllMsgData";
+    public static final String FIRST_CONNECT_SYNC_EMIT = "pushAllMsgData";
+    public static final String CHAT_DETAIL_EMIT = "chatForNumber";
     public static final String NEW_MSG_RECEIVED = "newMsgRecv";
-    public static final String MESSAGE_TO_SEND = "socket.on.message_to_send";
+    public static final String GET_CHAT_EVENT = "getChat";
+    public static final String GET_ALL_CHAT_HEADS = "sendChatHeads";
+    public static final String SEND_NEW_MESSAGE = "sendMsg";
 
     // Notification id
     public static final int FOREGROUND_SERVICE_NOTIFICATION_ID = 1;
+
+    // Runtime Permissions
+    public static final int GRANT_PERMISSION = 1;
 }

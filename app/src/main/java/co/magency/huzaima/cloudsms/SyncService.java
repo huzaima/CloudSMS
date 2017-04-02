@@ -8,20 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.SmsMessage;
+import android.telephony.SmsManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 
-import co.magency.huzaima.cloudsms.model.ReceivedSms;
-import co.magency.huzaima.cloudsms.model.Sms;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -34,7 +30,6 @@ public class SyncService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -59,10 +54,49 @@ public class SyncService extends Service {
                     Log.v("lalala", "Socket connected with id " + socket.id());
                     socket.emit(AppConstants.AUTH_TOKEN_EMIT, intent.getStringExtra(AppConstants.AUTH_TOKEN));
                     Intent firstTimeSync = new Intent(getApplicationContext(), ConversationListService.class);
-                    firstTimeSync.putExtra(AppConstants.AUTH_TOKEN, "abc");
+                    firstTimeSync.putExtra(AppConstants.AUTH_TOKEN, authToken);
                     startService(firstTimeSync);
                 }
             });
+
+            socket.on(AppConstants.GET_CHAT_EVENT, new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    String number = (String) args[0];
+                    Log.v("lalala", "Received request for number: " + number);
+                    Intent getChatIntent = new Intent(getApplicationContext(), ChatDetailService.class);
+                    getChatIntent.putExtra(AppConstants.GET_CHAT_FOR_NUMBER, number);
+                    getChatIntent.putExtra(AppConstants.AUTH_TOKEN, authToken);
+                    stopService(getChatIntent);
+                    startService(getChatIntent);
+                }
+            });
+
+            socket.on(AppConstants.GET_ALL_CHAT_HEADS, new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    Log.v("lalala", "Received request for getting all chat heads");
+                    Intent syncList = new Intent(getApplicationContext(), ConversationListService.class);
+                    syncList.putExtra(AppConstants.AUTH_TOKEN, authToken);
+                    startService(syncList);
+                }
+            });
+
+            socket.on(AppConstants.SEND_NEW_MESSAGE, new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    try {
+                        JSONObject jsonObject = (JSONObject) args[0];
+                        Log.v("lalala", "Received: " + jsonObject.toString());
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage(jsonObject.getString("number"), null,
+                                jsonObject.getString("message"), null, null);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             socket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -71,14 +105,9 @@ public class SyncService extends Service {
         Intent notificationIntent = new Intent(getApplicationContext(), TestActivity.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
-                0, notificationIntent, 0);
+                164, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext())
-                .setContentTitle("CloudSMS working")
-                .setContentText("Visit web page to see magic!")
-                .setOngoing(false)
-                .setContentIntent(pendingIntent)
-                .build();
+        Notification notification = new NotificationCompat.Builder(getApplicationContext()).build();
 
         startForeground(AppConstants.FOREGROUND_SERVICE_NOTIFICATION_ID, notification);
 
@@ -98,28 +127,17 @@ public class SyncService extends Service {
     BroadcastReceiver incomingSmsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                Object[] pdus = (Object[]) bundle.get("pdus");
 
-                if (socket == null) // socket is not connected
-                    return;
+            if (socket == null) // socket is not connected
+                return;
 
-                for (int i = 0; i < pdus.length; i++) {
-                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                    String number = currentMessage.getOriginatingAddress();
-                    String message = currentMessage.getDisplayMessageBody();
-                    long timestamp = currentMessage.getTimestampMillis();
-
-                    ReceivedSms receivedSms = new ReceivedSms(new Sms(message, timestamp, false), number, authToken);
-
-                    Type type = new TypeToken<ReceivedSms>() {
-                    }.getType();
-
-                    Gson gson = new Gson();
-                    final String json = gson.toJson(receivedSms, type);
-                    socket.emit(AppConstants.NEW_MSG_RECEIVED, json);
-                }
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("authToken", authToken);
+                Log.v("lalala", "Emitting: " + jsonObject.toString());
+                socket.emit(AppConstants.NEW_MSG_RECEIVED, jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     };

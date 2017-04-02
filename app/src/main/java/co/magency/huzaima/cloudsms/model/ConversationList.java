@@ -1,20 +1,20 @@
 package co.magency.huzaima.cloudsms.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huzaima on 3/19/17.
  */
 
-public class ConversationList {
+public class ConversationList<T> {
 
     private String authToken;
-    private Map<String, List<Sms>> conversations;
+    private List<T> conversations;
+    private String number = null;
 
     public ConversationList() {
-        conversations = new HashMap<>();
+        conversations = new ArrayList<>();
     }
 
     public String getAuthToken() {
@@ -25,11 +25,24 @@ public class ConversationList {
         this.authToken = authToken;
     }
 
-    public Map<String, List<Sms>> getConversations() {
+    public List<T> getConversations() {
         return conversations;
     }
 
-    public void setConversations(Map<String, List<Sms>> conversations) {
+    public void setConversations(List<T> conversations) {
         this.conversations = conversations;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return authToken + " " + number + "\n\n" + conversations.toString();
     }
 }

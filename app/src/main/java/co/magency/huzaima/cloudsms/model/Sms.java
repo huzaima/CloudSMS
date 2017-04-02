@@ -8,9 +8,9 @@ import android.support.annotation.NonNull;
 
 public class Sms implements Comparable<Sms> {
 
-    private String message;
-    private long timestamp;
-    private boolean sent;
+    protected String message;
+    protected long timestamp;
+    protected boolean sent;
 
     public Sms(String message, long timestamp, boolean sent) {
         this.message = message;
@@ -40,6 +40,11 @@ public class Sms implements Comparable<Sms> {
 
     public void setSent(boolean sent) {
         this.sent = sent;
+    }
+
+    @Override
+    public String toString() {
+        return timestamp + ", " + message + "\n\n";
     }
 
     @Override

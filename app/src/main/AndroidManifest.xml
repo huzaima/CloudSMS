@@ -14,14 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<receiver-->
-        <!--android:name=".IncomingSMSReceiver"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="true">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
 
         <activity android:name=".TestActivity">
             <intent-filter>
@@ -30,13 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".auth.QrCodeScannerActivity" />
 
         <service
             android:name=".ConversationListService"
+            android:enabled="true"
             android:exported="false" />
+
         <service
             android:name=".SyncService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".ChatDetailService"
+            android:enabled="true"
             android:exported="false" />
     </application>
 
